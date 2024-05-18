@@ -1,0 +1,45 @@
+name: Python application
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Create configuration file
+      run: |
+        echo "[database]" > config.ini
+        echo "db_file = inventory_management.db" >> config.ini
+        echo "[logging]" >> config.ini
+        echo "log_file = inventory_management.log" >> config.ini
+        echo "log_level = INFO" >> config.ini
+
+    - name: Create necessary directories
+      run: |
+        mkdir -p barcodes
+        mkdir -p scanned_barcodes
+
+    - name: Initialize database
+      run: |
+        python -c "from database import DatabaseManager; db_manager = DatabaseManager('inventory_management.db'); print('Database initialized.')"
