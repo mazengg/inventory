@@ -1,0 +1,7 @@
+sqlalchemy
+argparse
+pyzbar
+opencv-python
+pillow
+argon2-cffi
+requests
