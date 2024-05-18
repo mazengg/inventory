@@ -12,7 +12,8 @@ def install_packages():
         'opencv-python',
         'pillow',
         'argon2-cffi',
-        'requests'
+        'requests',
+        'python-barcode'
     ]
     subprocess.check_call([sys.executable, "-m", "pip", "install", *packages])
 
